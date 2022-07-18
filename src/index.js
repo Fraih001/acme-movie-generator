@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
-import { setMovies, createMovies, deleteMovies } from './store';
+import { setMovies, createMovies, deleteMovies, editMovies } from './store';
 import store from './store';
 
 class _App extends Component{
@@ -15,13 +15,16 @@ class _App extends Component{
         return(
         <div>
             <h1>The Acme Random Movie Generator</h1>
+            The Average Movie Rating Is {this.props.averageRating}
             <button onClick={this.props.createMovies}>Generate a Random Movie!</button>
 
                 { this.props.movies.map(movie => {
                     return (
                     <li key={movie.id}>
-                        {movie.name}
+                        {movie.name} {movie.rating}
                         <button onClick={()=>this.props.deleteMovies(movie)}>Delete</button>
+                        <button onClick={()=>this.props.editMovies(movie, 1)}>plus</button>
+                        <button onClick={()=>this.props.editMovies(movie, -1)}>minus</button>
                     </li>
                     )
                 })}
@@ -31,8 +34,16 @@ class _App extends Component{
 };
 
 const mapStateToProps = ({ movies }) => {
+    let averageRating = 0
+    movies.forEach(movie => {
+        console.log(movie.rating)
+        averageRating += movie.rating
+    });
+    console.log(averageRating)
+    averageRating = averageRating / movies.length
     return {
-        movies
+        movies,
+        averageRating
     }
 }
 
@@ -46,6 +57,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteMovies: (movie)=>{
         dispatch(deleteMovies(movie))
+    },
+    editMovies: (movie, dir)=>{
+        movie = {...movie, rating: movie.rating + dir}
+        dispatch(editMovies(movie))
     }
     }
 }

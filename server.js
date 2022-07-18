@@ -13,7 +13,8 @@ const Movie = conn.define('movies', {
     allowNull: false,
   },
   rating: {
-    type: INTEGER
+    type: INTEGER,
+    defaultValue: 1
   }
 });
 
@@ -63,6 +64,17 @@ app.delete('/api/movies/:id', async(req,res,next)=>{
     res.sendStatus(204);
   } catch(er){
     next(er);
+  }
+});
+
+app.put('/api/movies/:id', async(req,res,next)=>{
+  try{
+    const movie = await Movie.findByPk(req.params.id);
+    await movie.update(req.body);
+    res.status(201).send(movie);
+
+  }catch(er){
+    next(er)
   }
 })
 
