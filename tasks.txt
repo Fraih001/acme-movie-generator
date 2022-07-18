@@ -1,5 +1,5 @@
-[ ]Display Movies
-[ ]Create A Movie
-[ ]Delete A Movie
-[ ]Increment / Decrement Star Rating
-[ ]Show average rating
+[X] Display Movies
+[X] Create A Movie
+[X] Delete A Movie
+[ ] Increment / Decrement Star Rating
+[ ] Show average rating
