@@ -11,7 +11,6 @@ class _App extends Component{
     }
     
     render(){
-        console.log(this.props)
         return(
         <div>
             <h1>The Acme Random Movie Generator</h1>
@@ -36,10 +35,8 @@ class _App extends Component{
 const mapStateToProps = ({ movies }) => {
     let averageRating = 0
     movies.forEach(movie => {
-        console.log(movie.rating)
         averageRating += movie.rating
     });
-    console.log(averageRating)
     averageRating = averageRating / movies.length
     return {
         movies,

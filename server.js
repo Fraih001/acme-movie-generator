@@ -18,6 +18,16 @@ const Movie = conn.define('movies', {
   }
 });
 
+Movie.addHook('beforeUpdate', (movie) => {
+  if(movie.rating > 10) {
+    throw "rating can only go up to 10"
+  } else if (movie.rating < 0) {
+    throw "rating can only go down to 0"
+  } else {
+  return
+}}
+)
+
 const syncAndSeed = async()=>{
   await conn.sync({force:true});
 

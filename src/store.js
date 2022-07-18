@@ -59,9 +59,15 @@ export const deleteMovies = (movie) => {
 
 export const editMovies = (movie) => {
     return async(dispatch) => {
+    try{
         movie = (await axios.put(`/api/movies/${movie.id}`, movie)).data;
         dispatch(_editMovies(movie));
-    }
+    } catch(er){
+        console.log(er.response.data)
+        if (er.response.data === "Rating cannot go any lower!" || "Rating cannot go any higher!") {
+            alert('Choose a number between 0 - 10!!')
+        }
+    }}
 }
 
 const movieReducer = (state = [], action) => {
