@@ -3,6 +3,11 @@
     <title>The Acme Movie Generator</title>
     <script src='/dist/main.js' defer></script>
 <style>
+/* div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
 main > button {
   height: 3rem;
   width: 20%;
@@ -15,6 +20,7 @@ button {
   height: 2rem;
   width: 20%;
   background-color: tomato;
+  margin: .3rem;
 }
 
 li button:first-child {
@@ -30,6 +36,7 @@ li {
   list-style-type: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
   border: solid 1px gray;
   margin: 1rem;
 }
@@ -38,6 +45,23 @@ li > div {
   justify-content: space-around;
 }
 li > div > * {
+}
+#movie-name{
+  font-weight: bold
+}
+#main-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#delete-button{
+  background-color: darkred;
+  color: white;
+}
+
+#no-movies{
+  text-align: center;
 }
 </style>
   </head>

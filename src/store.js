@@ -64,8 +64,8 @@ export const editMovies = (movie) => {
         dispatch(_editMovies(movie));
     } catch(er){
         console.log(er.response.data)
-        if (er.response.data === "Rating cannot go any lower!" || "Rating cannot go any higher!") {
-            alert('Choose a number between 0 - 10!!')
+        if (er.response.data === "Rating can only go up to 5" || "Rating can only go down to 1") {
+            alert('Choose a number between 1 - 5!!')
         }
     }}
 }
@@ -73,13 +73,15 @@ export const editMovies = (movie) => {
 const movieReducer = (state = [], action) => {
     switch (action.type) {
         case SET_MOVIES:
-            return action.movies
+            return action.movies.sort((a,b)=> b.rating - a.rating)
         case CREATE_MOVIES:
-            return [...state, action.movie]
+            return [...state, action.movie].sort((a,b)=> b.rating - a.rating)
         case DELETE_MOVIES:
             return state.filter(movie => movie.id !== action.movie.id)
         case EDIT_MOVIES:
-            return state.map(movie => movie.id !== action.movie.id ? movie : action.movie)
+            let movies = state.map(movie => movie.id !== action.movie.id ? movie : action.movie);
+            movies = movies.sort((a,b)=> b.rating - a.rating);
+            return [...movies]
         default:
             return state
     }

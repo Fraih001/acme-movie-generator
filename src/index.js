@@ -13,31 +13,39 @@ class _App extends Component{
     render(){
         return(
         <div>
-            <h1>The Acme Random Movie Generator</h1>
-            The Average Movie Rating Is {this.props.averageRating}
-            <button onClick={this.props.createMovies}>Generate a Random Movie!</button>
+            <div id='main-header'>
+                <h1>The Acme Random Movie Generator</h1>
+                The Average Movie Rating Is {this.props.averageRating ? this.props.averageRating : 0} Stars out of 5
+                <br/>
+                
+                <button onClick={this.props.createMovies}>Generate a Random Movie!</button>
+   
+            </div>
 
-                { this.props.movies.map(movie => {
+                { this.props.movies.length > 1 ? this.props.movies.map(movie => {
                     return (
                     <li key={movie.id}>
-                        {movie.name} {movie.rating}
-                        <button onClick={()=>this.props.deleteMovies(movie)}>Delete</button>
-                        <button onClick={()=>this.props.editMovies(movie, 1)}>plus</button>
-                        <button onClick={()=>this.props.editMovies(movie, -1)}>minus</button>
+                        <p id='movie-name'>{movie.name}</p>
+                        Rating: {movie.rating} Stars
+
+
+                        <button onClick={()=>this.props.editMovies(movie, 1)}>Add to Rating</button>
+                        <button onClick={()=>this.props.editMovies(movie, -1)}>Subtract from Rating</button>
+                        <button id='delete-button' onClick={()=>this.props.deleteMovies(movie)}>Delete</button>
                     </li>
                     )
-                })}
+                }): <p id='no-movies'>There are no movies in this list! Try creating one!</p>}
         </div>
         )
     }
 };
 
 const mapStateToProps = ({ movies }) => {
-    let averageRating = 0
+    let averageRating = 1
     movies.forEach(movie => {
         averageRating += movie.rating
     });
-    averageRating = averageRating / movies.length
+    averageRating = averageRating / movies.length - .25
     return {
         movies,
         averageRating

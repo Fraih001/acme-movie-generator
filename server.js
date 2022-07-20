@@ -14,15 +14,15 @@ const Movie = conn.define('movies', {
   },
   rating: {
     type: INTEGER,
-    defaultValue: 1
+    defaultValue: 3
   }
 });
 
 Movie.addHook('beforeUpdate', (movie) => {
-  if(movie.rating > 10) {
-    throw "rating can only go up to 10"
-  } else if (movie.rating < 0) {
-    throw "rating can only go down to 0"
+  if(movie.rating > 5) {
+    throw "Rating can only go up to 5"
+  } else if (movie.rating < 1) {
+    throw "Rating can only go down to 1"
   } else {
   return
 }}
@@ -31,11 +31,11 @@ Movie.addHook('beforeUpdate', (movie) => {
 const syncAndSeed = async()=>{
   await conn.sync({force:true});
 
-  const [speed, titanic, avatar, caddyshack] = await Promise.all([
+  const [speed, friday, avatar, caddyshack] = await Promise.all([
       Movie.create({ name: 'speed' }),
-      Movie.create({ name: 'titanic' }),
+      Movie.create({ name: 'friday' }),
       Movie.create({ name: 'avatar' }),
-      Movie.create({ name: 'titanic' })
+      Movie.create({ name: 'caddyshack' })
   ])
 }
 
